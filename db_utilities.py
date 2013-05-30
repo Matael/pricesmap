@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 # -*- coding:utf8 -*-
 #
-# pricesmap.py
+# db_utilities.py
 #
 # Copyright © 2013 Mathieu Gaborit (matael) <mathieu@matael.org>
 #
@@ -24,39 +24,31 @@
 #
 
 """
-PricesMap
-=========
-
-Price tracking for some products in the city.
-PricesMap allow everyone to add a price and a pic for some product for example expressos...
+Some utilities for Database
 """
 
-from flask import \
-        Flask,\
-        render_template,\
-        g
-app = Flask(__name__)
+import sqlite3
 
-from db_utilities import *
+from settings import *
 
-# == HOOKS ==
-@app.before_request
-def before_request():
-    """ Pre-request hook """
-    g.db = connect_db()
+# database
+def connect_db():
+    """ Connection to database """
+    return sqlite3.connect(DATABASE)
 
-@app.teardown_request
-def teardown_request(*args, **kw):
-    """ Post request hook """
-    g.db.close()
+def query_db(query, args=(), one=False, conn=None):
+    """ DB Helper Function
+    If conn is provided, works on this connection, else, work on default connection
+    """
 
-# == ROUTES & VIEWS ==
-@app.route('/')
-def home():
-    """ Homepage view """
+    if conn:
+        cur = conn.execute(query, args)
+    else:
+        cur = g.db.execute(query, args)
 
-    return render_template('home.html')
+    rv = [dict((cur.description[idx][0], value)
+               for idx, value in enumerate(row)) for row in cur.fetchall()]
+    return (rv[0] if rv else None) if one else rv
 
 
-if __name__=='__main__':
-    app.run()
+
