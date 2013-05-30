@@ -1,0 +1,7 @@
+{
+	"name":"Product type",
+    "url":"url_suffix",
+    "description":"Short description for this type of product",
+    "form_html":"HTML description for form without submit",
+    "table_structure":"sql statement. Must be VALID !"
+}
