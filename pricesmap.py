@@ -39,6 +39,7 @@ app = Flask(__name__)
 
 from db_utilities import *
 
+
 # == HOOKS ==
 @app.before_request
 def before_request():
@@ -49,6 +50,7 @@ def before_request():
 def teardown_request(*args, **kw):
     """ Post request hook """
     g.db.close()
+
 
 # == ROUTES & VIEWS ==
 @app.route('/')
