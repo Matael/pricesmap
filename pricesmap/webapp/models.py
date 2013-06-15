@@ -25,12 +25,6 @@ class Item(models.Model):
     submitter_email = models.EmailField()
     date = models.DateField(auto_now_add=True)
     comment = models.CharField(max_length=200)
-    # Soucis avec python3
-    # image = models.ImageField(
-    #     upload_to=settings.MEDIA_ROOT,
-    #     blank=True,
-    #     null=True
-    # )
     latitude = models.FloatField()
     longitude = models.FloatField()
 
