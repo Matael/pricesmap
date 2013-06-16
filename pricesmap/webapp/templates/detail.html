@@ -24,6 +24,15 @@
 
 {% block content %}
 
+{% if messages %}
+{% for m in messages %}
+<div class="alert alert-{{m.tags}}">
+	{{m}}
+	<button class="close" data-dismiss="alert" type="button">×</button>
+</div>
+{% endfor %}
+{% endif %}
+
 <h1 id="topline">{{produit}}</h1>
 
 <div class="row-fluid">
