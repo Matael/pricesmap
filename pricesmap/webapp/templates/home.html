@@ -1,5 +1,19 @@
-{% extends "base.html" %}
+{% extends 'base.html' %}
 
 {% block content %}
-<p>Project description....</p>
+
+<div class="hero-unit">
+
+	<h1>PricesMap</h1>
+	<p>On cherche souvent à connaitre les prix de certaines choses autour de nous... PricesMap est là pour ça !</p>
+	<p>Selectionnez un produit pour en savoir plus !</p>
+	<div class="pagination pagination-centered">
+		<ul>
+		{% for t in types %}
+			<li><a href="{% url 'detail' t.url_name %}">{{t}}</a></li>
+		{% endfor %}
+		</ul>
+	</div>
+
+</div>
 {% endblock %}
