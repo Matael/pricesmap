@@ -35,7 +35,7 @@ class Item(models.Model):
     produit = models.ForeignKey('Produit')
 
     def __unicode__(self):
-        return self.produit.name+'@'+self.id
+        return self.produit.name+'@'+str(self.id)
 
 # ADMIN
 admin.site.register(Produit)
