@@ -7,6 +7,7 @@ from django.shortcuts import\
         RequestContext
 from django.core.urlresolvers import reverse
 from django.http import Http404
+from django.contrib import messages
 
 from pricesmap.webapp.models import *
 from pricesmap.webapp.forms import ItemForm
@@ -42,12 +43,16 @@ def detail(request, type):
 
 
 def add(request, type):
-    if request.POST:
+
+    if not type in [_.url_name for _ in Produit.objects.all()]:
+        return Http404()
+
+    if request.method == 'POST':
 
         produit = get_object_or_404(Produit, url_name=type)
 
         form = ItemForm(request.POST)
-        if not form.is_valid():
+        if form.is_valid():
 
             item = Item()
             item.prix = form.cleaned_data['prix']
@@ -60,4 +65,8 @@ def add(request, type):
 
             item.save()
 
-    return redirect(reverse('detail', args=(type)))
+        else:
+            messages.error(request, "Le formulaire rempli n'était pas valide....")
+
+
+    return redirect(reverse('detail', args=(str(type),)))
