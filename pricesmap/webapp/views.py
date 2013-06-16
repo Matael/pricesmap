@@ -24,10 +24,8 @@ def home(request):
     )
 
 def detail(request, type):
-    if not type in [_.url_name for _ in Produit.objects.all()]:
-        return Http404
 
-    produit = Produit.objects.get(url_name=type)
+    produit = get_object_or_404(Produit, url_name=type)
     items = produit.item_set.all()
     form = ItemForm()
 
@@ -43,9 +41,6 @@ def detail(request, type):
 
 
 def add(request, type):
-
-    if not type in [_.url_name for _ in Produit.objects.all()]:
-        return Http404()
 
     if request.method == 'POST':
 
