@@ -10,6 +10,7 @@ class Produit(models.Model):
     """
 
     name = models.CharField(max_length=200)
+    url_name = models.SlugField(max_length=20)
     description = models.TextField(
         help_text="Peut contenir du HTML pour la mise en forme. Ne sera pas vérifié lors de l'affichage (mark_safe)"
     )
