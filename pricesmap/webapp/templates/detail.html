@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+
+{% load geo %}
+
+{% block extraHead %}
+	<!-- Leaflet CDN -->
+	<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.5/leaflet.css" />
+	<!--[if lte IE 8]>
+		<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.5/leaflet.ie.css" />
+	<![endif]-->
+
+	<script src="http://cdn.leafletjs.com/leaflet-0.5/leaflet.js"></script>
+
+
+	<style>
+		/* Define height for map section */
+		#map {
+			margin-top: 40px;
+			height: 600px;
+		}
+	</style>
+
+{% endblock %}
+
+{% block content %}
+
+<h1 id="topline">{{produit}}</h1>
+
+<div class="row-fluid">
+	<div class="span7">
+		{{produit.description|safe}}
+	</div>
+
+	<div class="span5">
+		<h2>Participer</h2>
+		<form action="{% url 'add' produit.url_name %}" method="post">
+			{% csrf_token %}
+
+			{{form.as_p}}
+			<input type="submit" class="btn btn-primary" value="Ajouter"/>
+		</form>
+	</div>
+</div>
+
+<div id="map"></div>
+
+<script type="text/javascript">
+	// initialize the map...
+	var map = L.map('map').setView([46.7, 4.19], 5);
+
+	// ... load tile layer ...
+	L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+	attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+	}).addTo(map);
+
+	// ... add markers and popups
+	{% for i in items %}
+	L.marker([{{i.latitude|sep}}, {{i.longitude|sep}}]).addTo(map)
+		.bindPopup('<h4>{{i.prix}}€</h4><br><p>{{i.comment}}</p>')
+	{% endfor %}
+
+	var clicked_marker;
+	map.on('click', function onMapClick(e) {
+		if (clicked_marker) {
+			map.removeLayer(clicked_marker);
+		}
+		document.getElementById('id_latitude').value = e.latlng.lat;
+		document.getElementById('id_longitude').value = e.latlng.lng;
+
+		clicked_marker = new L.marker(e.latlng).addTo(map)
+			.bindPopup('Ajoutez un prix à cette carte en remplissant <a href="#topline">le formulaire</a>.<br>Les coordonnées sont celle du point que vous venez de cliquer')
+			.openPopup();
+	});
+</script>
+{% endblock %}
+
