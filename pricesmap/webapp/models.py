@@ -1,5 +1,7 @@
 # -*- coding: utf8 -*-
 from django.db import models
+from django.contrib import admin
+
 import pricesmap.settings_test as settings
 
 class Produit(models.Model):
@@ -33,3 +35,7 @@ class Item(models.Model):
 
     def __unicode__(self):
         return self.produit.name+'@'+self.id
+
+# ADMIN
+admin.site.register(Produit)
+admin.site.register(Item)
