@@ -73,8 +73,8 @@
 		if (clicked_marker) {
 			map.removeLayer(clicked_marker);
 		}
-		document.getElementById('id_latitude').value = e.latlng.lat;
-		document.getElementById('id_longitude').value = e.latlng.lng;
+		$('#id_latitude').attr('value', e.latlng.lat);
+		$('#id_longitude').attr('value', e.latlng.lng);
 
 		clicked_marker = new L.marker(e.latlng).addTo(map)
 			.bindPopup('Ajoutez un prix à cette carte en remplissant <a href="#topline">le formulaire</a>.<br>Les coordonnées sont celle du point que vous venez de cliquer')
