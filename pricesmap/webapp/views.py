@@ -26,7 +26,7 @@ def home(request):
 def detail(request, type):
 
     produit = get_object_or_404(Produit, url_name=type)
-    items = produit.item_set.all()
+    items = produit.item_set.all().filter(reported=False)
     form = ItemForm()
 
     return render_to_response(
