@@ -30,6 +30,7 @@ class Item(models.Model):
     comment = models.CharField(max_length=200)
     latitude = models.FloatField()
     longitude = models.FloatField()
+    reported = models.BooleanField(default=False, blank=True)
 
     # foreign key
     produit = models.ForeignKey('Produit')
