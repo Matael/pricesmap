@@ -6,10 +6,11 @@ class AboutView(TemplateView):
 
     template_name = "about.html"
 urlpatterns = patterns('pricesmap.webapp.views',
-    url(r'^product/(?P<type>\w+)/?$', 'detail', name='detail'),
-    url(r'^product/(?P<type>\w+)/add/?$', 'add', name='add'),
-)
+    url(r'^p/(?P<type>\w+)/?$', 'detail', name='detail'),
+    url(r'^p/(?P<type>\w+)/add/?$', 'add', name='add'),
+    url(r'^p/report/(?P<id>\w+)/?$', 'report', name='report'),
 
+)
 
 urlpatterns += patterns('',
     url(r'^about/?$', AboutView.as_view(), name="about")

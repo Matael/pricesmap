@@ -65,3 +65,14 @@ def add(request, type):
 
 
     return redirect(reverse('detail', args=(str(type),)))
+
+def report(request, id):
+    """If a item gets reported, it disapear from the list, waiting for an admin to verify it"""
+
+    item = get_object_or_404(Item, pk=id)
+    item.reported = True
+    item.save()
+
+    messages.success(request, "L'information a bien été marquée comme 'A vérifier'. Merci !")
+    return redirect(reverse('detail', args=(str(item.produit.url_name),)))
+
