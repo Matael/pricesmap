@@ -65,7 +65,7 @@
 	// ... add markers and popups
 	{% for i in items %}
 	L.marker([{{i.latitude|sep}}, {{i.longitude|sep}}]).addTo(map)
-		.bindPopup('<h4>{{i.prix}}€</h4><br><p>{{i.comment}}</p>')
+		.bindPopup('<h4>{{i.prix}}€</h4><br><p>{{i.comment}}</p><p class="text-right text-error"><a href="{% url 'report' i.id %}">Signaler</a></p>')
 	{% endfor %}
 
 	var clicked_marker;
